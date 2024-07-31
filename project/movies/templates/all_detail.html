@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All Details - My Django App
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">All Movies, Directors, and Awards</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Movies</h2>
+            <ul class="list-group">
+                {% for movie in movies %}
+                <li class="list-group-item">
+                    <h5>{{ movie.title }}</h5>
+                    <ul>
+                        <li>Description: {{ movie.description }}</li>
+                        <li>Year: {{ movie.year }}</li>
+                        <li>Release Date: {{ movie.release_date }}</li>
+                        <li>Actor Name: {{ movie.Actor_name }}</li>
+                        <li>Budget: {{ movie.budget }}</li>
+                        <li>Total Collections: {{ movie.total_collections }}</li>
+                        <li>Review: {{ movie.review }}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Directors</h2>
+            <ul class="list-group">
+                {% for director in directors %}
+                <li class="list-group-item">
+                    <h5>{{ director.name }}</h5>
+                    <ul>
+                        <li>Title: {{ director.title }}</li>
+                        <li>Hit or Flop: {{ director.hit_or_flop }}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Awards</h2>
+            <ul class="list-group">
+                {% for award in awards %}
+                <li class="list-group-item">{{ award.Award }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Movie{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #1abc9c;
+    }
+
+    .form-field {
+      margin-bottom: 1rem;
+    }
+
+    .form-field label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-field input[type="text"],
+    .form-field input[type="password"],
+    .form-field input[type="number"],
+    .form-field textarea {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-field input[type="file"] {
+      margin-top: 0.5rem;
+    }
+
+    .form-actions {
+      text-align: center;
+    }
+
+    .form-actions button {
+      background-color: #1abc9c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .form-actions button:hover {
+      background-color: #16a085;
+    }
+  </style>
+</head>
+
+<div class="form-container">
+  <h2 class="form-title">Edit Movie</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-field">
+      <label for="id_title">Title:</label>
+      {{ form.title }}
+    </div>
+    
+    <div class="form-field">
+      <label for="id_actor_name">Actor Name:</label>
+      {{ form.Actor_name }}
+    </div>
+    <div class="form-field">
+      <label for="id_description">Summary:</label>
+      {{ form.description }}
+    </div>
+    
+    <div class="form-field">
+      <label for="id_year">Year:</label>
+      {{ form.year }}
+    </div>
+    
+    <div class="form-field">
+      <label for="id_release_date">Release Date:</label>
+      {{ form.release_date }}
+    </div>
+    
+    <div class="form-field">
+      <label for="id_awards">Awards:</label>
+      {{ form.Awards }}
+    </div>
+    <div class="form-field">
+      <label for="id_awards">Review:</label>
+      {{ form.review }}
+    </div>
+
+    <div class="form-field">
+      <label for="id_image">Image:</label>
+      {{ form.image }}
+    </div>
+
+    <div class="form-field">
+      <label for="id_image">Budget:</label>
+      {{ form.budget }}
+    </div>
+
+    <div class="form-field">
+      <label for="id_image">Total Collections:</label>
+      {{ form.total_collections }}
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit">Save Changes</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ hero.hero }}</h1>
+            <p>Date of Birth: {{ hero.dob }}</p>
+            <p>Bio: {{ hero.bio }}</p>
+
+            {% if awards %}
+            <h3>Awards:</h3>
+            <ul>
+                {% for award in awards %}
+                <li>{{ award }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No awards yet.</p>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-center">
+            {% if hero.img %}
+            <img src="{{ hero.img.url }}" alt="{{ hero.name }} Image" class="img-fluid rounded"
+                style="max-width: 200px; max-height: 200px;">
+            {% else %}
+            <p>No image available</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Industry: {{ industry.name }}</h2>
+            <p>{{ industry.description }}</p>
+           
+        </div>
+        <a href="{% url 'edit_actor' hero.pk %}">Edit</a> <br>
+        <a href="{% url 'delete_actor' hero.pk %}">Delete</a> <br>
+        <a href="{% url 'heros'  %}">Back to List</a>
+    </div>
+</div>
+{% endblock %}
+

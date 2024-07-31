@@ -1,0 +1,44 @@
+<!-- templates/add_actor.html -->
+
+{% extends 'base.html' %}  {# Assuming you have a base template #}
+{% block content %}
+<div class="container">
+    <h2>Add Actor</h2>
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        <!-- Loop through form fields -->
+        {% for field in form %}
+            <div class="form-group mb-10 ">
+                {{ field.label_tag }}
+                {% if field.name == 'awards' %}
+                    <div class="checkbox">
+                        {% for checkbox in field %}
+                            <div class="form-check form-check-inline">
+                                {{ checkbox.tag }}
+                                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<style>
+    .mb-3 {
+        margin-bottom: 10cm;  
+    }
+</style>
+{% endblock %}

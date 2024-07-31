@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ award.Award }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ award.Award }}</h1>
+                        <h2 class="card-subtitle mb-3">Actors who received this award:</h2>
+                        <ul class="list-group">
+                            {% for actor in actors %}
+                                <li class="list-group-item">{{ actor.hero }}</li>
+                            {% empty %}
+                                <li class="list-group-item text-muted">No actors received this award yet</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'award-list' %}" class="btn btn-secondary">Back to Awards List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

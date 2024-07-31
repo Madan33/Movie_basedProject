@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Movie Listing Web{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #005f6b; 
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+    
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1abc9c; 
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+        }
+    
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.5s ease-in-out;
+            background-color: #1abc9c; 
+            padding: 0.5rem; 
+}
+
+    
+        .navbar-brand img {
+            max-height: 40px; 
+            margin-right: 10px;
+            border-radius: 30px; 
+
+        }
+    
+        .navbar-toggler {
+            display: none;
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ffffff; 
+            transition: color 0.5s ease-in-out;
+        }
+    
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .nav-item {
+            margin-left: 1rem;
+        }
+    
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff; 
+            font-weight: bold;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+    
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffffff; 
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out;
+        }
+    
+        .nav-link:hover {
+            color: #005f6b; 
+        }
+    
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .navbar-toggler {
+                display: block;
+            }
+            .navbar-nav.active {
+                display: flex;
+            }
+            .nav-item {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="{% static 'images/smk_logo.jpg' %}" alt="Logo"> 
+                SMK MOVIES
+            </div>
+            <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
+            <ul class="navbar-nav" id="navbarNav">
+                {% if user.is_authenticated %}
+                    {% if request.resolver_match.url_name != 'list' %}
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'list' %}">Movies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'heros' %}">Hero</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'industry_list' %}">Industry</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <script>
+        function toggleNavbar() {
+            const navbarNav = document.getElementById('navbarNav');
+            navbarNav.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

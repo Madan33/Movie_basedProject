@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ actor.hero }}'s Awards</title>
+</head>
+<body>
+    <h1>{{ actor.hero }}'s Awards</h1>
+    {% if awards %}
+        <ul>
+            {% for award in awards %}
+                <li>{{ award.Award }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ actor.hero }} has not received any awards yet.</p>
+    {% endif %}
+</body>
+</html>

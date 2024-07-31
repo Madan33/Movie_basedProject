@@ -1,0 +1,19 @@
+<h2>Actor Detail</h2>
+<p><strong>Name:</strong> {{ actor.hero }}</p>
+<p><strong>Industry:</strong> {{ actor.industry }}</p>
+<p><strong>Date of Birth:</strong> {{ actor.dob }}</p>
+<p><strong>Bio:</strong> {{ actor.bio }}</p>
+<p><strong>Awards:</strong>
+    {% for award in actor.awards.all %}
+        {{ award.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+        None
+    {% endfor %}
+</p>
+{% if actor.img %}
+    <img src="{{ actor.img.url }}" alt="{{ actor.hero }} Image">
+{% endif %}
+<br>
+<a href="{% url 'edit_actor' hero.pk %}">Edit</a> |
+<a href="{% url 'delete_actor' hero.pk %}">Delete</a> |
+<a href="">Back to List</a>

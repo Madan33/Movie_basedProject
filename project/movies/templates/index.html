@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SMK Movies{% endblock %}</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #005f6b;
+        transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        margin: 0; 
+        padding: 0; 
+    }
+
+    .hero {
+        background-image: url("{% static 'images/image3.avif' %}"); 
+        background-size: cover; 
+        background-position: center;
+        height: 100vh; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white; 
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .animated-title {
+        font-size: 4rem; 
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-transform: uppercase; 
+        animation: fadeInDown 1s ease-in-out;
+        color: #ffffff; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .animated-text {
+        font-size: 1.8rem; 
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-in-out;
+        line-height: 1.6; 
+        color: #ffffff; 
+    }
+
+    .animated-button {
+        background-color:  #066b57; 
+        color: #ffffff; 
+        padding: 1rem 2rem;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        animation: pulse 1.5s infinite;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .animated-button:hover {
+        background-color: #069175;
+        transform: scale(1.05);
+    }
+
+
+    
+</style>
+
+</head>
+<body>
+{% block content %}
+  <div class="hero">
+    <h1 class="animated-title"><b>Welcome to SMK Movies</b></h1>
+    <p class="animated-text">Explore a vast collection of movies from various genres and eras. Whether you're in the mood for a classic film or the latest blockbuster, we have something for everyone.</p>
+    {% if user.is_authenticated %}
+      {% if not movies %}
+        <button class="animated-button" onclick="window.location.href='{% url 'list' %}'">Create Movie Details</button>
+      {% endif %}
+    {% else %}
+        <button class="animated-button" onclick="window.location.href='{% url 'login' %}'">Click Here To Explore Movies</button>
+    {% endif %}
+  </div>
+{% endblock %}
+
+</body>
+</html>

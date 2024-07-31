@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Movie List{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <style>
+    .animated-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease-in-out;
+      text-align: center;
+      color: #1abc9c;
+    }
+
+    .search-form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .search-form input[type="text"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 2px solid #1abc9c;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+      width: 400px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .search-form button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #1abc9c;
+      border-left: none;
+      background-color: #1abc9c;
+      color: white;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .search-form button:hover {
+      background-color: #16a085;
+    }
+
+    .movie-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .movie-table th, .movie-table td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: center; /* Center text in table cells */
+      vertical-align: middle; /* Vertically center the content */
+    }
+
+    .movie-table th {
+      background-color: #1abc9c;
+      color: white;
+    }
+
+    .movie-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .movie-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .movie-table img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn-primary {
+      background-color: #1abc9c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+      background-color: #16a085;
+    }
+
+    .btn-edit,
+.btn-delete {
+  display: inline-block; 
+  background-color: #3498db; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  text-decoration: none; 
+  transition: background-color 0.3s ease-in-out; 
+  margin-right: 0.5rem; 
+}
+
+.btn-edit:hover {
+  background-color: #2980b9; 
+}
+
+.btn-delete {
+  background-color: #e74c3c; 
+}
+
+.btn-delete:hover {
+  background-color: #c0392b; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .btn-edit,
+  .btn-delete {
+    display: block; 
+    width: 70%; 
+    margin-bottom: 0.5rem; 
+  }
+}
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<div class="container">
+  <h2 class="animated-title">Movie List</h2>
+
+  <form method="GET" action="{% url 'list' %}" class="search-form">
+    <input type="text" name="q" placeholder="Search Movies" value="{{ request.GET.q }}">
+    <button type="submit" class="btn-primary">Search</button>
+  </form>
+
+  <a href="{% url 'create' %}" class="btn-primary">Create Movie</a><br><br>
+  <table class="movie-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th> Actor Name</th>
+        <th style="width:600px;">Summary</th>
+        <th>Year</th>
+        <th>Release Date</th>
+        <th>Awards</th>
+        <th>Review</th>
+        <th>Image</th>
+        <th>Budget</th>
+        <th>Total Collections</th>
+        <th>Edit/Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for movie in movies %}
+      <tr>
+        <td>{{ movie.title|upper }}</td>
+        <td>{{movie.Actor_name}}</td>
+        <td>{{ movie.description|default:'no data available' }}</td>
+        <td>{{ movie.year }}</td>
+        <td>{{movie.release_date}}</td>
+        <td>{{movie.Awards}}</td>
+        <td>{{ movie.review }}</td>
+        
+        <td>
+          {% if movie.image %}
+          <img src="{{ movie.image.url }}" alt="{{ movie.title }} Image" style="max-width: 200px; max-height: 250px;">
+          <td>{{movie.budget}}</td>
+          <td>{{movie.total_collections}}</td>
+          {% else %}
+          No Image Available
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'edit' movie.pk %}" class="btn-edit">Edit</a>
+          <a href="{% url 'delete' movie.pk %}" class="btn-delete">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if movies.has_other_pages %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% if movies.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo; First</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.previous_page_number }}">Previous</a>
+      </li>
+      {% endif %}
+      
+      <li class="page-item disabled">
+        <span class="page-link">Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+      </li>
+      
+      {% if movies.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.next_page_number }}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.paginator.num_pages }}">Last &raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}
+

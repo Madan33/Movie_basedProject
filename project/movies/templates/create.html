@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Movie{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <style>
+    .create-container {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #1abc9c;
+    }
+
+    .create-form {
+      margin-top: 1rem;
+    }
+
+    .create-form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .create-form input[type="text"],
+    .create-form input[type="number"],
+    .create-form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    .create-form input[type="text"]:focus,
+    .create-form textarea:focus {
+      border-color: #1abc9c;
+    }
+
+    .create-form button {
+      background-color: #1abc9c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .create-form button:hover {
+      background-color: #16a085;
+    }
+  </style>
+</head>
+
+<div class="create-container">
+  <h2 class="create-title">Create Movie</h2>
+  <form method="post" enctype="multipart/form-data" action="{% url 'create' %}" class="create-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+</div>
+{% endblock %}

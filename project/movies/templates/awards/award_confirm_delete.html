@@ -1,0 +1,13 @@
+<!-- award_confirm_delete.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete "{{ object.Award }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+    <a href="{% url 'award-list' %}">Cancel</a>
+  </form>
+{% endblock %}

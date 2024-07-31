@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Director Details</h2>
+    <dl class="row">
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">{{ director.name }}</dd>
+        
+        <dt class="col-sm-3">Title:</dt>
+        <dd class="col-sm-9">{{ director.title }}</dd>
+        
+        <dt class="col-sm-3">Hit or Flop:</dt>
+        <dd class="col-sm-9">{{ director.get_hit_or_flop_display }}</dd>
+        
+    </dl>
+
+    <div class="btn-group">
+        <a class="btn btn-primary" href="{% url 'director-update' director.pk %}">Edit</a>
+        <form action="{% url 'director-delete' director.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ director.name }}?')">Delete</button>
+        </form>
+        <a class="btn btn-secondary" href="{% url 'director-list' %}">Back to List</a>
+    </div>
+</div>
+{% endblock %}

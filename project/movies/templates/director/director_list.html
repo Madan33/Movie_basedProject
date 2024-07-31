@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Directors</h2>
+    <a class="btn btn-primary mb-2" href="{% url 'director-create' %}">Add Director</a>
+
+  
+    <!-- Director List Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for director in directors %}
+            <tr>
+                <td>{{ director.name }}</td>
+    
+                <td>
+                    <a class="btn btn-info btn-sm" href="{% url 'director-detail' director.pk %}">View</a>
+                    <a class="btn btn-warning btn-sm" href="{% url 'director-update' director.pk %}">Edit</a>
+                    <form action="{% url 'director-delete' director.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ director.name }}?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
